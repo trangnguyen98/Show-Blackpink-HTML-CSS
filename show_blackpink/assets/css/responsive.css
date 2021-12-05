@@ -1,0 +1,89 @@
+/* Tablet && Mobile */
+@media (max-width: 1023px) {
+    .btn {
+        padding: 15px 16px;
+    }
+    .form-control {
+        padding: 15px;
+    }
+    #nav .subnav a {
+        padding: 5px 12px;
+    }
+    .contact-info {
+        line-height: 2;
+    }
+    .socials-list a {
+        margin: 0 8px;
+    }
+    .copyright a {
+        padding: 12px 0;
+        display: inline-block;
+    }
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+    #footer .socials-list {
+        font-size: 40px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 740px) {
+    .s-full-width,
+    .s-col-full {
+        width: 100%;
+    }
+    .s-mt-8 {
+        margin-top: 8px;
+    }
+    #header .mobile-menu-btn {
+        display: block;
+    }
+    #header .search-btn {
+       display: none;
+    }
+    #header {
+        overflow: hidden; /* gia tri mac dinh overflow: visible (hien cac doi tuong con trog  doi tuong cha), hidden an cac doi tuong con tho ra khoi doi tuong cha */
+    }
+    #nav {
+        display: block;
+    }
+    #nav > li:first-child {
+        display: inline-block;
+    }
+    #nav > li {
+        display: block;
+    }
+    #nav li a {
+        padding: 1px 24px;
+    }
+    #nav .subnav {
+        position: initial; /* để gt mmặc định */
+        background: rgb(82, 81, 81);
+
+    }
+    #nav .subnav a {
+       color: #fff;
+       padding: 5px 41px;
+    }
+    #content .member-item {
+        width: 100%;
+    }
+    #content .member-img {
+        margin: 0 0 16px; 
+        width: 60%;
+    }
+    #content .member-name {
+        margin: 15px 0;
+    }
+    .places-list {
+        display: block;
+    }
+    .contact-form {
+        margin-top: 16px;
+    }
+    #footer .socials-list {
+        font-size: 25px;
+    }
+}

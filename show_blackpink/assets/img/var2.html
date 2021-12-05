@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)https://codelearn.io/sharing/var-vs-let-vs-const-trong-js -->
+<html lang="en-US" class="static dir-ltr codecamp-blog" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="description" content="Tại sao lại cần tới let và const dù trước đó đã có var để khai báo biến, thì ở bài viết này là lý do của từng kiểu khai báo biến.">
+<meta name="author" content="CodeLearn">
+<link rel="shortcut icon" href="https://codelearn.io/Themes/TheCodeCampPro/Resources/Images/content/codelearn-icon.png">
+<link rel="apple-touch-icon" href="https://codelearn.io/Themes/TheCodeCampPro/Resources/Images/content/codelearn-icon.png">
+<link rel="canonical" href="https://codelearn.io/sharing/var-vs-let-vs-const-trong-js">
+<link rel="alternate" hreflang="vi" href="https://codelearn.io/sharing/var-vs-let-vs-const-trong-js">
+<link rel="alternate" hreflang="en-US" href="https://codelearn.io/sharing/var-vs-let-vs-const-trong-js">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0">
+<title>ES Series #1: Các Kiểu Khai Báo Biến Var vs Let vs Const.</title>
+
+<meta property="og:title" content="ES Series #1: Các Kiểu Khai Báo Biến Var vs Let vs Const.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://codelearn.io/sharing/var-vs-let-vs-const-trong-js">
+<meta property="og:description" content="Tại sao lại cần tới let và const dù trước đó đã có var để khai báo biến, thì ở bài viết này là lý do của từng kiểu khai báo biến.">
+<meta property="og:image" content="/Upload/Blog/es-series-var-vs-let-vs-const-63731721191.7283.jpg">
+<meta property="fb:app_id" content="540883753774783">
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="https://codelearn.io/sharing/var-vs-let-vs-const-trong-js">
+<meta name="twitter:title" content="ES Series #1: Các Kiểu Khai Báo Biến Var vs Let vs Const.">
+<meta name="twitter:description" content="Tại sao lại cần tới let và const dù trước đó đã có var để khai báo biến, thì ở bài viết này là lý do của từng kiểu khai báo biến.">
+<meta name="twitter:image" content="/Upload/Blog/es-series-var-vs-let-vs-const-63731721191.7283.jpg">
+<meta name="twitter:site" content="@Codelearn.io">
+<meta name="twitter:creator" content="@Codelearn.io">
+
+<meta name="google-signin-client_id" content="16523143533-ovv9lj8c7i8sv36sv3lguom0msmdk8ah.apps.googleusercontent.com">
+
+<script src="./var2_files/700313553710795" async=""></script><script src="./var2_files/sdk.js.download" async="" crossorigin="anonymous"></script><script src="./var2_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./var2_files/recaptcha__en.js.download" crossorigin="anonymous" integrity="sha384-nQIWhE7WOxHTiNyNCmC5+GFD/CfTvFJOw8ExBl8VtC8dRdbvikyVIRtwC0cO8/2e"></script><script type="text/javascript" async="" src="./var2_files/analytics.js.download"></script><script async="" src="./var2_files/fbevents.js.download"></script><script id="facebook-jssdk" src="./var2_files/xfbml.customerchat.js.download"></script><script async="" src="./var2_files/js"></script>
+<script>
+        var isGetNotification = true;
+        var isNotCountComment = false;
+
+        var s3Storage = '';
+        var resourcePath = '/Themes/TheCodeCampPro/Resources';
+        var strAuthen = '';
+        var faceId = '540883753774783';
+        var isLoadedFacebook = 'False';
+        if (strAuthen == '') {
+            var googleId = '16523143533-ovv9lj8c7i8sv36sv3lguom0msmdk8ah.apps.googleusercontent.com';
+        }
+
+        if (strAuthen == '') {
+            var LOGIN_VALIDATOR, SIGNUP_VALIDATOR;
+            function openModal(tab) {
+
+                $('#loginModal a[data-target="#' + tab + '"]').tab('show');
+                switch (tab) {
+                    case 'login':
+                        $(".btn--facebook").attr('title', 'Login with Facebook');
+                        $(".btn--google").attr('title', 'Login with Google');
+                        $("#loginModal .header-card").text('Login your account');
+                        SIGNUP_VALIDATOR && SIGNUP_VALIDATOR.resetForm();
+                        break;
+                    case 'signup':
+                        $(".btn--facebook").attr('title', 'Continue with Facebook');
+                        $(".btn--google").attr('title', 'Continue with Google');
+                        $("#loginModal .header-card").text('Register new account');
+                        LOGIN_VALIDATOR && LOGIN_VALIDATOR.resetForm();
+                        break;
+                }
+            }
+        }
+
+        if ('https://codelearn.io' == location.origin.toLocaleLowerCase()) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+
+            gtag('js', new Date());
+            gtag('config', 'UA-141685371-1');
+            gtag('config', 'USER_MANAGEMENT');
+            gtag('set', { 'user_id': 'CodeLearn-Anonymous' });
+
+            // Measure Google Ads conversions
+            gtag('event', 'conversion', {
+                'send_to': 'USER_MANAGEMENT/CodeLearn-Anonymous',
+            });
+
+            window['GoogleAnalyticsObject'] = 'ga';
+            window['ga'] = window['ga'] || function () {
+                (window['ga'].q = window['ga'].q || []).push(arguments)
+            };
+            ga('set', 'userId', 'CodeLearn-Anonymous' );
+        }
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: faceId,
+                xfbml: true,
+                version: 'v11.0'
+            });
+            FB.AppEvents.logPageView();
+            isLoadedFacebook = true;
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+    </script>
+
+<script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '700313553710795');
+        fbq('track', 'PageView');
+    </script>
+
+<link href="./var2_files/prism.min.css" rel="stylesheet" type="text/css">
+<link href="./var2_files/blog.min.css" rel="stylesheet" type="text/css">
+<link href="./var2_files/comment.min.css" rel="stylesheet" type="text/css">
+<link href="./var2_files/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="./var2_files/styles.min.css" rel="stylesheet" type="text/css">
+<link href="./var2_files/common.min.css" rel="stylesheet" type="text/css">
+<link href="./var2_files/Site.min.css" rel="stylesheet" type="text/css">
+<link href="./var2_files/login-modal.min.css" rel="stylesheet" type="text/css">
+<script src="./var2_files/jquery.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/bootstrap.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/jquery-ui.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/anchor.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/moment.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/moment-with-locales.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/jquery.validate.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/additional-methods.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/api.js.download" type="text/javascript"></script>
+<script src="./var2_files/login-form.min.js.download" type="text/javascript"></script>
+<script async="" defer="" src="./var2_files/platform.js.download" type="text/javascript" gapi_processed="true"></script>
+<script src="./var2_files/common.min.js.download" type="text/javascript"></script>
+<style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_customer_chat_bubble_animated_no_badge{box-shadow:0 3px 12px rgba(0, 0, 0, .15);transition:box-shadow 150ms linear}.fb_customer_chat_bubble_animated_no_badge:hover{box-shadow:0 5px 24px rgba(0, 0, 0, .3)}.fb_customer_chat_bubble_animated_with_badge{box-shadow:-5px 4px 14px rgba(0, 0, 0, .15);transition:box-shadow 150ms linear}.fb_customer_chat_bubble_animated_with_badge:hover{box-shadow:-5px 8px 24px rgba(0, 0, 0, .2)}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}.fb_new_ui_mobile_overlay_active{overflow:hidden}@keyframes fb_mpn_landing_page_slide_in{0%{border-radius:50%;margin:0 24px;width:60px}40%{border-radius:18px}100%{margin:0 12px;width:100% - 24px}}@keyframes fb_mpn_landing_page_slide_in_from_left{0%{border-radius:50%;left:12px;margin:0 24px;width:60px}40%{border-radius:18px}100%{left:12px;margin:0 12px;width:100% - 24px}}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes fb_bounce_out_v2_mobile_chat_started{0%{opacity:1;top:0}100%{opacity:0;top:20px}}@keyframes fb_customer_chat_bubble_bounce_in_animation{0%{bottom:6pt;opacity:0;transform:scale(0, 0);transform-origin:center}70%{bottom:18pt;opacity:1;transform:scale(1.2, 1.2)}100%{transform:scale(1, 1)}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style></head>
+<body class="hold-transition site-body skin-sku-light layout-top-nav sharing ">
+<script>
+        //<![CDATA[
+        var LANG_CURRENT = "en";
+        const CurrentUserId = 0;
+        const NOTTIFY_USER_ACCESSKEY ='nottifyAccessKey';
+        const IS_ADMIN = false;
+        
+        PKLService.init({ strVersion: '1249890005', strLangCode: 'en', IsHasLogin: false, url: location.origin });
+        //]]>
+</script>
+<div id="layout-navigation" class="group ">
+<div class="zone zone-navigation">
+<article class="widget-navigation widget-menu-widget widget is-sticky" style="height: 69px;">
+<header class="navbar site-header">
+
+<div class="wrap-site-logo">
+<a title="CodeLearn" href="https://codelearn.io/">
+<img alt="CodeLearn nền tảng dạy lập trình trực tuyến" class="site-logo" src="./var2_files/codelearn-logo.png">
+<img alt="CodeLearn lập trình mỗi ngày" class="site-logo-mobile" src="./var2_files/codelearn-mobile-logo.png">
+</a>
+</div>
+<div class="wrap-right-header">
+<input type="checkbox" id="mobile-menu-cb" name="mobile-menu-cb">
+<label class="hamburger-button" for="mobile-menu-cb">
+<span class="hamburger-icon"></span>
+</label>
+<label class="hamburger-menu-mask" for="mobile-menu-cb"></label>
+<nav class="site-menu">
+<ul class="menu menu-main-menu">
+<li><a href="https://codelearn.io/learning">Learning</a>
+</li>
+<li><a href="https://codelearn.io/training">Training</a>
+</li>
+<li><a href="https://codelearn.io/fights">Fights</a>
+</li>
+<li><a href="https://codelearn.io/challenge">Challenge</a>
+</li>
+<li><a href="https://codelearn.io/evaluating">Evaluating</a>
+</li>
+<li><a href="https://codelearn.io/discussion">Discussion</a>
+</li>
+<li><a href="https://codelearn.io/game">Game</a>
+</li>
+<li class="current"><a href="https://codelearn.io/sharing">Chia sẻ</a>
+</li>
+</ul>
+<div class="dropdown dropdown-language">
+<a href="https://codelearn.io/sharing/var-vs-let-vs-const-trong-js#" class="dropdown-toggle btn-dark btn--language " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="English">
+<img alt="English" class="button-language btn-img flag" src="./var2_files/en.png">
+</a>
+<ul class="dropdown-menu">
+<li>
+<span class="change-lang" data-link="/language/setLanguageLocal?name=en&amp;redirectUrl=">
+<img alt="en" class="icon-language" src="./var2_files/en.png">
+English
+</span>
+</li>
+<li>
+<span class="change-lang" data-link="/language/setLanguageLocal?name=vn&amp;redirectUrl=">
+<img alt="vn" class="icon-language" src="./var2_files/vn.png">
+Tiếng Việt
+</span>
+</li>
+</ul>
+</div>
+</nav>
+
+
+<ul class="site-user-menu">
+<li>
+<button id="login-header" class="btn btn-login" data-toggle="modal" data-target="#loginModal" onclick="openModal(&#39;login&#39;)">Login</button>
+<button class="btn" data-toggle="modal" data-target="#loginModal" onclick="openModal(&#39;signup&#39;)">Register</button>
+</li>
+</ul>
+</div>
+</header>
+</article>
+<article class="widget-navigation widget-bread-cumps-widget widget">
+<nav aria-label="breadcrumb">
+<div class="container">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="https://codelearn.io/">Home</a></li>
+<li class="breadcrumb-item"><a href="https://codelearn.io/sharing/var-vs-let-vs-const-trong-js">Sharing</a></li>
+</ol>
+</div>
+</nav>
+
+
+</article></div>
+</div>
+<main id="layout-main" class="group">
+<div id="layout-content" class="group">
+<div id="content" class="group">
+<div class="zone zone-content">
+<script>
+    var preview = true;
+    var isPublish = false;
+    var id = 2555329;
+    var blogId = 'var-vs-let-vs-const-trong-js';
+    var userId = 0;
+    var ownerId = 22826;
+</script>
+
+<div class="container">
+<div class="blog-detail">
+<div class="row">
+<div class="col-md-9 main-blog">
+<div class="wrapper">
+<div class="row author">
+<div class="col-sm-7 text-left">
+<span>Author</span>
+<span class="author-name"><a href="https://codelearn.io/profile/22826">D.A.N_3002</a> </span>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span id="create-time" class="time">2020-08-01</span>
+</div>
+<div class="col-sm-5 text-right">
+<span class="comment-icon"><i class="cl-icon-eye"></i></span>
+<span class="comment-text total-view">1092</span>
+<span class="comment-icon"><i class="cl-icon-share-alt"></i></span>
+<span class="comment-text">0</span>
+</div>
+</div>
+<div class="row main-content">
+<div class="col-md-12">
+<div class="main-image">
+<img src="./var2_files/es-series-var-vs-let-vs-const-63731721191.7283.jpg" alt="ES Series #1: Các Kiểu Khai Báo Biến Var vs Let vs Const.">
+</div>
+<div class="blog-content">
+<h1>ES Series #1: Các Kiểu Khai Báo Biến Var vs Let vs Const.</h1>
+<div class="content">
+<p><strong>Một trong những tính năng nổi bật của ES6 đó là sự bổ sung <code>let</code> và <code>const</code> phục vụ cho việc khai báo biến dữ liệu.</strong></p>
+<p>Vậy tại sao lại cần tới let và const dù trước đó đã có <code>var</code> để khai báo biến, thì ở bài viết này chúng ta sẽ cùng tìm hiểu lý do của từng kiểu khai báo biến.</p>
+<h3>1. Function Scope vs Block Scope:</h3>
+<p>Đây là hai khái niệm bạn cần nắm rõ để có thể phân biệt:</p>
+<h4><strong>Function Scope</strong></h4>
+<p>Các biến <strong>Function Scope</strong> sẽ có tác dụng trong phạm vi của một <strong>function</strong> mà nó được khai báo bên trong. Ngoài ra, nếu bạn khai báo không nằm trong một hàm nào thì sẽ trở thành <strong>biến toàn cục (global variable).</strong></p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token keyword">function</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'hello'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p></p>
+<h4><strong> Block Scope</strong></h4>
+<p>Các biến <strong>Block Scope</strong> sẽ có tác dụng trong phạm vi của một <strong>block</strong> mà nó được khai báo bên trong và các<strong> block con</strong> trong đó. Một block là đoạn code bên trong cặp dấu ngoặc nhọn:</p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Hello'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3>2. Var</h3>
+<p>Tất cả các biến được khai báo với <code>var</code> đều là<code> function scope</code>.&nbsp;Điều này đồng nghĩ, nếu ta khai báo trong một <code>block scope</code> thì biến đó vẫn có thể truy cập được ở bên ngoài.</p>
+<p>Ví dụ:</p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token string">'D.A.N_3002'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Kết quả:&nbsp;</p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token constant">D</span><span class="token punctuation">.</span><span class="token constant">A</span><span class="token punctuation">.</span><span class="token constant">N_3002</span></code></pre>
+<p>Ta thấy biến <code>name</code> được khai báo bên trong một block của hàm if, nhưng vì ta dùng <code>var</code> nên <code>name</code> là một biến <strong>function scope (ở đây là biến toàn cục)</strong> ==&gt; Ta có thể truy cập nó từ bên ngoài.</p>
+<h3>3. Let</h3>
+<p>Tất cả các biến được khai báo với <code>let</code> đều là <code>block scope</code>, ta chỉ có thể truy cập vào biến khi ở cùng 1 block hoặc là các block con.</p>
+<p>Ví dụ:</p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token keyword">let</span> name <span class="token operator">=</span> <span class="token string">'Guest'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">let</span> name <span class="token operator">=</span> <span class="token string">'D.A.N_3002'</span><span class="token punctuation">;</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Kết quả:</p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token constant">D</span><span class="token punctuation">.</span><span class="token constant">A</span><span class="token punctuation">.</span><span class="token constant">N_3002</span>
+Guest</code></pre>
+<p>Có thể thấy, đoạn code trên sẽ tạo ra 2 biến name ở 2 block scope khác nhau:</p>
+<div>
+<ul>
+<li><code><span>name</span><span> </span><span>=</span><span> </span><span>'</span><span>Guest</span></code><span><code>'</code> sẽ có scope là Global.</span></li>
+</ul>
+<div>
+<ul>
+<li><code><span>name</span><span> </span><span>=</span><span> </span><span>'</span><span>D.A.N_3002</span></code><span><code>'</code> sẽ có scope là block của lệnh if.</span></li>
+</ul>
+<div>Và 2 hàm log cũng nằm trong 2 scope khác nhau ==&gt; Kết quả in ra sẽ khác nhau (tùy thuộc vào scope của nó).</div>
+<h3>4. Const</h3>
+<p>Từ khóa này tương tự với <code>let</code>, chỉ khác là giá trị của biến sẽ <strong>không thể thay đổi</strong>. Ta không thể gán một giá trị mới cho biến được khai báo bằng <code>const</code>.</p>
+<p>Ví dụ:</p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token keyword">const</span> name <span class="token operator">=</span> <span class="token string">'D.A.N_3002'</span><span class="token punctuation">;</span>
+name <span class="token operator">=</span> <span class="token string">'New name'</span><span class="token punctuation">;</span></code></pre>
+<p>Khi chạy, đoạn code trên sẽ trả về một lỗi như sau:</p>
+<pre class="  language-javascript"><code class="  language-javascript">TypeError<span class="token operator">:</span> Assignment to constant variable<span class="token punctuation">.</span></code></pre>
+<p>Tuy nhiên, nếu biến được khai báo bằng const là một <code>object</code> thì ta vẫn có thể thay đổi các <strong>thuộc tính</strong> trong object đó. Do đây không phải là gán một giá trị mới cho biến, mà chỉ là thay đổi bên trong biến.</p>
+<p>Ví dụ:</p>
+<pre class="  language-javascript"><code class="  language-javascript"><span class="token keyword">const</span> person <span class="token operator">=</span> <span class="token punctuation">{</span>
+   name<span class="token operator">:</span> <span class="token string">'Dinh Anh Nguyen'</span><span class="token punctuation">,</span>
+   age<span class="token operator">:</span> <span class="token number">17</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+person<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'D.A.N_3002'</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Kết quả:</p>
+<pre class="  language-javascript"><code class="  language-javascript">Dinh Anh Nguyen
+<span class="token constant">D</span><span class="token punctuation">.</span><span class="token constant">A</span><span class="token punctuation">.</span><span class="token constant">N_3002</span></code></pre>
+<h3>5. Tổng kết:</h3>
+<p>Vậy khi nào thì bạn nên dùng <code>var, let hoặc const.</code> Điều này thì tùy vào mục đích của bạn, tuy nhiên mình có một số lời khuyên như sau:</p>
+<ul>
+<li><strong>Không</strong> nên sử dụng <code>var</code> vì từ khóa này rất khó xác định scope cụ thể của biến.</li>
+<li>Sử dụng <code>let</code> khi biến đó cần phải thay đổi giá trị.</li>
+<li>Sử dụng <code>const</code> khi biến đó không cần thay đổi giá trị <strong>(Config DB, nhập liệu từ người dùng,... ).</strong></li>
+</ul>
+<p>Cảm ơn mọi người đã đọc hết bài viết của mình, hy vọng rằng bài viết đã giúp bạn có cái nhìn tổng quát hơn về việc khai báo biến cũng như là phạm vi của biến trong ES6. Mong mọi người sẽ ủng hộ series tìm hiểu về các phiên bản ES này của mình, cũng như là góp ý để bài viết được tốt hơn.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row sharing">
+<div class="col-sm-8 text-left tag-lists">
+<a href="https://codelearn.io/sharing/tags/javascript" class="tag-list" title="javascript">javascript</a>
+<a href="https://codelearn.io/sharing/tags/es6" class="tag-list" title="es6">es6</a>
+<a href="https://codelearn.io/sharing/tags/hoc-lap-trinh" class="tag-list" title="hoc-lap-trinh">hoc-lap-trinh</a>
+</div>
+<div class="col-sm-4 text-right share">
+<div class="fb-share-button fb_iframe_widget" data-layout="button" data-size="small" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=540883753774783&amp;container_width=0&amp;href=https%3A%2F%2Fcodelearn.io%2Fsharing%2Fvar-vs-let-vs-const-trong-js&amp;layout=button&amp;locale=en_US&amp;sdk=joey&amp;size=small"><span style="vertical-align: bottom; width: 67px; height: 20px;"><iframe name="f2d1c426919f314" width="1000px" height="1000px" data-testid="fb:share_button Facebook Social Plugin" title="fb:share_button Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./var2_files/share_button.html" style="border: none; visibility: visible; width: 67px; height: 20px;" class=""></iframe></span></div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<div class="comment-area">
+<div class="user-rating">
+<div id="star-rating" class="star-rating rate-block">
+<span class="avg-rate" style="width:100.0%"></span>
+<span class="vote-rate">
+<span title="Please login to rate this post." value="1" class="star"><i class="icon cl-icon-star star"></i></span>
+<span title="Please login to rate this post." value="2" class="star"><i class="icon cl-icon-star star"></i></span>
+<span title="Please login to rate this post." value="3" class="star"><i class="icon cl-icon-star star"></i></span>
+<span title="Please login to rate this post." value="4" class="star"><i class="icon cl-icon-star star"></i></span>
+<span title="Please login to rate this post." value="5" class="star"><i class="icon cl-icon-star star"></i></span>
+</span>
+</div>
+<span id="container-rate" class="">
+<span id="average-rate">5.0</span> (<span id="total-rating">3</span> votes)
+</span>
+</div>
+<a href="javascript:void(0)" data-toggle="modal" data-target="#loginModal" onclick="openModal(&#39;login&#39;)" class="not-auth">Please login to comment</a>
+<div id="container-comment">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="related-items">
+<b class="related">Related posts</b>
+<div id="related-items" class="list">
+<div class="item">
+<div class="row">
+<div class="col-sm-3 image">
+<a href="https://codelearn.io/sharing/lam-game-xep-hinh-bang-java">
+<img src="./var2_files/lam-game-xep-hinh-bang-java-63759180193.2134.jpg" alt="Làm Game Xếp Hình Bằng Java">
+</a>
+</div>
+<div class="col-sm-9 info">
+<div class="top">
+<h3>
+<a title="Làm Game Xếp Hình Bằng Java" href="https://codelearn.io/sharing/lam-game-xep-hinh-bang-java">Làm Game Xếp Hình Bằng Java</a>
+</h3>
+<div class="user-rating pull-right">
+<div class="user-rating">
+<span class="star-rating"><span style="width:100.0%"></span></span>
+</div>
+</div>
+<p>Xin chào các bạn chắc hẳn các bạn đã quen thuộc với trò chơi xếp hình cổ điển, trong bài viết này mình sẽ hướng dẫn các bạn làm trò chơi này bằng ngôn ngữ Java nhé.</p>
+</div>
+<div class="bottom">
+<div class="row tag-list">
+<div class="col-md-12 tag-scroll">
+<span><a href="https://codelearn.io/sharing/tags/game">game</a></span>
+<span><a href="https://codelearn.io/sharing/tags/java">java</a></span>
+<span><a href="https://codelearn.io/sharing/tags/hoc-lap-trinh">hoc-lap-trinh</a></span>
+<span><a href="https://codelearn.io/sharing/tags/tutorial">tutorial</a></span>
+</div>
+</div>
+<div class="author">
+<span>Author:</span>
+<a title="HaiZuka" href="https://codelearn.io/profile/282421">
+<span class="author-name">HaiZuka</span>
+</a>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="time">2021-06-14</span>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="comment-icon"><i class="cl-icon-eye"></i></span>
+<span class="comment-text total-view">4840</span>
+<span class="comment-icon"><i class="cl-icon-share-alt"></i></span>
+<span class="comment-text">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="item">
+<div class="row">
+<div class="col-sm-3 image">
+<a href="https://codelearn.io/sharing/lap-trinh-game-sudoku-bang-java">
+<img src="./var2_files/lap-trinh-game-sudoku-bang-java-63755221956.5775.jpg" alt="Lập Trình Game Sudoku Bằng Java">
+</a>
+</div>
+<div class="col-sm-9 info">
+<div class="top">
+<h3>
+<a title="Lập Trình Game Sudoku Bằng Java" href="https://codelearn.io/sharing/lap-trinh-game-sudoku-bang-java">Lập Trình Game Sudoku Bằng Java</a>
+</h3>
+<div class="user-rating pull-right">
+<div class="user-rating">
+<span class="star-rating"><span style="width:100.0%"></span></span>
+</div>
+</div>
+<p>Trò chơi sudoku đòi hỏi ta sự nhanh nhạy nhưng vẫn phải đảm bảo tính chính xác và cẩn thận. Hôm nay minh sẽ hướng dẫn các bạn lập trình game sudoku nhé.</p>
+</div>
+<div class="bottom">
+<div class="row tag-list">
+<div class="col-md-12 tag-scroll">
+<span><a href="https://codelearn.io/sharing/tags/hoc-lap-trinh">hoc-lap-trinh</a></span>
+<span><a href="https://codelearn.io/sharing/tags/sudoku">sudoku</a></span>
+<span><a href="https://codelearn.io/sharing/tags/java">java</a></span>
+</div>
+</div>
+<div class="author">
+<span>Author:</span>
+<a title="HaiZuka" href="https://codelearn.io/profile/282421">
+<span class="author-name">HaiZuka</span>
+</a>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="time">2021-04-29</span>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="comment-icon"><i class="cl-icon-eye"></i></span>
+<span class="comment-text total-view">3813</span>
+<span class="comment-icon"><i class="cl-icon-share-alt"></i></span>
+<span class="comment-text">1</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="item">
+<div class="row">
+<div class="col-sm-3 image">
+<a href="https://codelearn.io/sharing/fron-end-hay-back-end-chon-cai-nao">
+<img src="./var2_files/fron-end-hay-back-end-chon-cai-nao-63751982538.0982.jpg" alt="Front-end Hay Back-end, Lựa Chọn Nào Ổn Hơn?">
+</a>
+</div>
+<div class="col-sm-9 info">
+<div class="top">
+<h3>
+<a title="Front-end Hay Back-end, Lựa Chọn Nào Ổn Hơn?" href="https://codelearn.io/sharing/fron-end-hay-back-end-chon-cai-nao">Front-end Hay Back-end, Lựa Chọn Nào Ổn Hơn?</a>
+</h3>
+<div class="user-rating pull-right">
+<div class="user-rating">
+<span class="star-rating"><span style="width:100.0%"></span></span>
+</div>
+</div>
+<p>Có rất nhiều vai trò khác tham gia vào phát triển web. Nhưng hầu hết, thường sẽ có hai loại lập trình viên: một cho front end và một cho backend.</p>
+</div>
+<div class="bottom">
+<div class="row tag-list">
+<div class="col-md-12 tag-scroll">
+<span><a href="https://codelearn.io/sharing/tags/back-end">back-end</a></span>
+<span><a href="https://codelearn.io/sharing/tags/front-end">front-end</a></span>
+<span><a href="https://codelearn.io/sharing/tags/programming">programming</a></span>
+<span><a href="https://codelearn.io/sharing/tags/hoc-lap-trinh">hoc-lap-trinh</a></span>
+</div>
+</div>
+<div class="author">
+<span>Author:</span>
+<a title="Phoebe" href="https://codelearn.io/profile/579538">
+<span class="author-name">Phoebe</span>
+</a>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="time">2021-03-22</span>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="comment-icon"><i class="cl-icon-eye"></i></span>
+<span class="comment-text total-view">6294</span>
+<span class="comment-icon"><i class="cl-icon-share-alt"></i></span>
+<span class="comment-text">108</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="item">
+<div class="row">
+<div class="col-sm-3 image">
+<a href="https://codelearn.io/sharing/can-bang-phuong-trinh-hoa-hoc-bang-cpp">
+<img src="./var2_files/can-bang-phuong-trinh-hoa-hoc-bang-cpp-63752466266.5863.jpg" alt="Cân Bằng Phương Trình Hóa Học Bằng C++">
+</a>
+</div>
+<div class="col-sm-9 info">
+<div class="top">
+<h3>
+<a title="Cân Bằng Phương Trình Hóa Học Bằng C++" href="https://codelearn.io/sharing/can-bang-phuong-trinh-hoa-hoc-bang-cpp">Cân Bằng Phương Trình Hóa Học Bằng C++</a>
+</h3>
+<div class="user-rating pull-right">
+<div class="user-rating">
+<span class="star-rating"><span style="width:100.0%"></span></span>
+</div>
+</div>
+<p>Hóa học là một nỗi sợ và có thể nói là nỗi ám ảnh của đa số học sinh, vậy nếu ta tạo ra một chương trình cho phép cân bằng PTHH một cách chớp nhoáng thì sao nhỉ?</p>
+</div>
+<div class="bottom">
+<div class="row tag-list">
+<div class="col-md-12 tag-scroll">
+<span><a href="https://codelearn.io/sharing/tags/c%2b%2b">c++</a></span>
+<span><a href="https://codelearn.io/sharing/tags/pthh">pthh</a></span>
+<span><a href="https://codelearn.io/sharing/tags/tutorial">tutorial</a></span>
+<span><a href="https://codelearn.io/sharing/tags/hoc-lap-trinh">hoc-lap-trinh</a></span>
+</div>
+</div>
+<div class="author">
+<span>Author:</span>
+<a title="HaiZuka" href="https://codelearn.io/profile/282421">
+<span class="author-name">HaiZuka</span>
+</a>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="time">2021-03-28</span>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="comment-icon"><i class="cl-icon-eye"></i></span>
+<span class="comment-text total-view">10129</span>
+<span class="comment-icon"><i class="cl-icon-share-alt"></i></span>
+<span class="comment-text">441</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="item">
+<div class="row">
+<div class="col-sm-3 image">
+<a href="https://codelearn.io/sharing/nguon-hoc-cau-truc-du-lieu-va-giai-thuat">
+<img src="./var2_files/nguon-hoc-cau-truc-du-lieu-va-giai-thuat-63751397121.1255.jpg" alt="1001 Nguồn Học Cấu Trúc Dữ Liệu Và Giải Thuật Cực Hiệu Quả">
+</a>
+</div>
+<div class="col-sm-9 info">
+<div class="top">
+<h3>
+<a title="1001 Nguồn Học Cấu Trúc Dữ Liệu Và Giải Thuật Cực Hiệu Quả" href="https://codelearn.io/sharing/nguon-hoc-cau-truc-du-lieu-va-giai-thuat">1001 Nguồn Học Cấu Trúc Dữ Liệu Và Giải Thuật Cực Hiệu Quả</a>
+</h3>
+<div class="user-rating pull-right">
+<div class="user-rating">
+<span class="star-rating"><span style="width:100.0%"></span></span>
+</div>
+</div>
+<p>Mình bắt đầu gia nhập Amazon dưới vai trò Thực tập sinh Kỹ thuật Phát triển Phần mềm trong 6 tháng kể từ tháng 2 năm 2021. Hôm nay, mình sẽ chia sẻ tất cả các tài nguyên quan trọng mà mình đã theo học về Cấu trúc dữ liệu và Giải thuật trong thời gian qua.</p>
+</div>
+<div class="bottom">
+<div class="row tag-list">
+<div class="col-md-12 tag-scroll">
+<span><a href="https://codelearn.io/sharing/tags/algorithm">algorithm</a></span>
+<span><a href="https://codelearn.io/sharing/tags/data-structure">data-structure</a></span>
+<span><a href="https://codelearn.io/sharing/tags/hoc-lap-trinh">hoc-lap-trinh</a></span>
+</div>
+</div>
+<div class="author">
+<span>Author:</span>
+<a title="Phanhtrinh" href="https://codelearn.io/profile/600133">
+<span class="author-name">Phanhtrinh</span>
+</a>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="time">2021-03-15</span>
+<span class="time-icon"><i class="cl-icon-circle"></i></span>
+<span class="comment-icon"><i class="cl-icon-eye"></i></span>
+<span class="comment-text total-view">10418</span>
+<span class="comment-icon"><i class="cl-icon-share-alt"></i></span>
+<span class="comment-text">422</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-3 sidebar">
+<div class="block author-info">
+<h3>Author</h3>
+<div class="author">
+<div class="avatar">
+<img id="owner-level-avatar" class="level-avatar" src="./var2_files/User-17.svg">
+<img id="owner-user-avatar" class="user-avatar" src="./var2_files/5f49790ce8e94c2dbd89253896f77376.png">
+</div>
+<div class="user-name">
+<a id="owner" href="https://codelearn.io/profile/22826" title="D.A.N_3002">D.A.N_3002</a>
+</div>
+<p id="company-owner">FPT Software - Software Engineer</p>
+<div>
+<a href="https://codelearn.io/sharing/post/D.A.N_3002" id="total-post" class="total-post">9 posts</a> |
+<span id="total-follow">21</span> <span class="follower-text">followers</span>
+</div>
+<div>
+<button id="follow" value="0" type="button" class="btn btn-info not-allowed" title="Please login to follow this author."><i class="cl-icon-rss"></i> Follow</button>
+</div>
+<ul id="achievement-owner"><li class=""><i class="cl-icon-check-circle"></i><span>Third Prize FPT EDU HACKATHON 2019</span></li></ul>
+<span id="more-achievement" class="hide">See more</span>
+<div class="social-network">
+<a id="facebook" target="_blank" href="https://www.facebook.com/profile.php?id=100007673414765" class=""><i class="cl-icon-facebook-f"></i></a>
+<a id="twitter" href="javaScript:void(0)" class="not-allowed"><i class="cl-icon-twitter-full"></i></a>
+<a id="linkedIn" href="javaScript:void(0)" class="not-allowed"><i class="cl-icon-linkedin"></i></a>
+</div>
+</div>
+</div>
+<div class="block related-owner">
+<h3>Written by same author</h3>
+<div class="list-items">
+<div class="item">
+<a href="https://codelearn.io/sharing/ban-da-hieu-ro-ve-arrow-function" title="ES Series #2: Bạn Đã Hiểu Rõ Về Arrow Function?"><img src="./var2_files/ban-da-hieu-ro-ve-arrow-function-63732328555.6874.jpg" alt="ES Series #2: Bạn Đã Hiểu Rõ Về Arrow Function?"></a>
+<a title="ES Series #2: Bạn Đã Hiểu Rõ Về Arrow Function?" href="https://codelearn.io/sharing/ban-da-hieu-ro-ve-arrow-function">ES Series #2: Bạn Đã Hiểu Rõ Về Arrow Function?</a>
+</div>
+<div class="item">
+<a href="https://codelearn.io/sharing/bat-dong-bo-trong-javascript-phan-1" title="Xử Lý Bất Đồng Bộ Trong Javascript - Phần 1"><img src="./var2_files/bat-dong-bo-trong-javascript-phan-1-63729279698.371.jpg" alt="Xử Lý Bất Đồng Bộ Trong Javascript - Phần 1"></a>
+<a title="Xử Lý Bất Đồng Bộ Trong Javascript - Phần 1" href="https://codelearn.io/sharing/bat-dong-bo-trong-javascript-phan-1">Xử Lý Bất Đồng Bộ Trong Javascript - Phần 1</a>
+</div>
+<div class="item">
+<a href="https://codelearn.io/sharing/10-array-method-trong-javascript" title="10 Array Method Trong Javascript Coder Cần Biết"><img src="./var2_files/mot-so-array-method-trong-javascript-63725938762.39.jpg" alt="10 Array Method Trong Javascript Coder Cần Biết"></a>
+<a title="10 Array Method Trong Javascript Coder Cần Biết" href="https://codelearn.io/sharing/10-array-method-trong-javascript">10 Array Method Trong Javascript Coder Cần Biết</a>
+</div>
+<div class="item">
+<a href="https://codelearn.io/sharing/lam-game-ran-san-moi-bang-javascript" title="Làm Game Rắn Săn Mồi Bằng Javascript"><img src="./var2_files/lam-game-ran-san-moi-bang-javavscript-63725373434.9996.png" alt="Làm Game Rắn Săn Mồi Bằng Javascript"></a>
+<a title="Làm Game Rắn Săn Mồi Bằng Javascript" href="https://codelearn.io/sharing/lam-game-ran-san-moi-bang-javascript">Làm Game Rắn Săn Mồi Bằng Javascript</a>
+</div>
+<div class="item">
+<a href="https://codelearn.io/sharing/co-nen-chuyen-tu-windows-sang-linux" title="Có Nên Chuyển Từ Windows sang Linux?"><img src="./var2_files/nhung-thay-doi-khi-chuyen-qua-dung-linux-doi-voi-dev-63724098404.9489.png" alt="Có Nên Chuyển Từ Windows sang Linux?"></a>
+<a title="Có Nên Chuyển Từ Windows sang Linux?" href="https://codelearn.io/sharing/co-nen-chuyen-tu-windows-sang-linux">Có Nên Chuyển Từ Windows sang Linux?</a>
+</div>
+</div>
+</div>
+
+<div class="block new-posts">
+<h3>Top reads</h3>
+<div id="list-items" class="list-items">
+<div class="item">
+<a title="Hướng Dẫn Cài Đặt Visual Studio Code Lập Trình C++" href="https://codelearn.io/sharing/huong-dan-cai-dat-visual-studio-code-lap-trinh-cpp">Hướng Dẫn Cài Đặt Visual Studio Code Lập Trình C++</a>
+</div>
+<div class="item">
+<a title="Kiến Thức Cơ Bản Cần Nắm Khi Bắt Đầu Học C++" href="https://codelearn.io/sharing/kien-thuc-co-ban-khi-bat-dau-hoc-cpp">Kiến Thức Cơ Bản Cần Nắm Khi Bắt Đầu Học C++</a>
+</div>
+<div class="item">
+<a title="Nên Học Ngành Gì Trong Công Nghệ Thông Tin ?" href="https://codelearn.io/sharing/nen-hoc-nganh-gi-trong-cntt">Nên Học Ngành Gì Trong Công Nghệ Thông Tin ?</a>
+</div>
+<div class="item">
+<a title="Lập Trình Game Với Unity Như Thế Nào (Phần 1)" href="https://codelearn.io/sharing/lap-trinh-game-voi-unity-nhu-the-nao-phan-1">Lập Trình Game Với Unity Như Thế Nào (Phần 1)</a>
+</div>
+<div class="item">
+<a title="Lộ Trình Học Cấu Trúc Dữ Liệu Và Giải Thuật (Phần 1)" href="https://codelearn.io/sharing/lo-trinh-hoc-cau-truc-du-lieu-va-giai-thuat-phan-1">Lộ Trình Học Cấu Trúc Dữ Liệu Và Giải Thuật (Phần 1)</a>
+</div>
+</div>
+</div>
+<div class="block top-authors">
+<h3>Top authors</h3>
+<div id="list-user" class="list-user">
+<div class="row item">			            <div class="col-sm-3 avatar">				            <a href="https://codelearn.io/profile/415342">					            <img class="level-avatar" src="./var2_files/User-01.svg">					            <img class="user-avatar" src="./var2_files/3afd508df34a4b9595e048d09d1e0306.jpg">				            </a>			            </div>			            <div class="col-sm-9 user-name">				            <a title="T_Flower" href="https://codelearn.io/profile/415342">T_Flower</a>			            </div>		             </div><div class="row item">			            <div class="col-sm-3 avatar">				            <a href="https://codelearn.io/profile/3305">					            <img class="level-avatar" src="./var2_files/User-14.svg">					            <img class="user-avatar" src="./var2_files/e1907b3b49a84df1927e3b686d9324f2.jpg">				            </a>			            </div>			            <div class="col-sm-9 user-name">				            <a title="3ron" href="https://codelearn.io/profile/3305">3ron</a>			            </div>		             </div><div class="row item">			            <div class="col-sm-3 avatar">				            <a href="https://codelearn.io/profile/600133">					            <img class="level-avatar" src="./var2_files/User-02.svg">					            <img class="user-avatar" src="./var2_files/ceb1da45691c4ea8ac68ed4e98196893.jpg">				            </a>			            </div>			            <div class="col-sm-9 user-name">				            <a title="Phanhtrinh" href="https://codelearn.io/profile/600133">Phanhtrinh</a>			            </div>		             </div><div class="row item">			            <div class="col-sm-3 avatar">				            <a href="https://codelearn.io/profile/934495">					            <img class="level-avatar" src="./var2_files/User-02.svg">					            <img class="user-avatar" src="./var2_files/39d1cb5bbee141b4ac5862f1013c59cf.jpg">				            </a>			            </div>			            <div class="col-sm-9 user-name">				            <a title="Quangvinh1986" href="https://codelearn.io/profile/934495">Quangvinh1986</a>			            </div>		             </div><div class="row item">			            <div class="col-sm-3 avatar">				            <a href="https://codelearn.io/profile/3410">					            <img class="level-avatar" src="./var2_files/User-10.svg">					            <img class="user-avatar" src="./var2_files/8c8a595891d647edacd68413999a2a94.jpg">				            </a>			            </div>			            <div class="col-sm-9 user-name">				            <a title="vietcv" href="https://codelearn.io/profile/3410">vietcv</a>			            </div>		             </div></div>
+</div>
+<div class="block hashtag">
+<h3>Hashtag</h3>
+<div id="tag-list" class="tag-list">
+<span><a href="https://codelearn.io/sharing/tags/hoc-lap-trinh">hoc-lap-trinh</a></span>
+<span><a href="https://codelearn.io/sharing/tags/javascript">javascript</a></span>
+<span><a href="https://codelearn.io/sharing/tags/es6">es6</a></span>
+</div>
+</div>
+<div class="block">
+<div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/CodeLearnFanpage" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=540883753774783&amp;container_width=0&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FCodeLearnFanpage&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false&amp;tabs=timeline&amp;width="><span style="vertical-align: bottom; width: 340px; height: 500px;"><iframe name="f1f5aa9681814d8" width="1000px" height="1000px" data-testid="fb:page Facebook Social Plugin" title="fb:page Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./var2_files/page.html" style="border: none; visibility: visible; width: 340px; height: 500px;" class=""></iframe></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</main>
+<footer id="footer" class="group codecamp-footer">
+<div class="zone zone-footer">
+<div class=" main-footer">
+<div class="container">
+<div class="row">
+<div class="col-xs-12 col-md-6 introduction footer-column">
+<div class="logo-codelearn">
+<img src="./var2_files/codelearn-logo.svg" alt="CodeLearn">
+</div>
+<p>
+CodeLearn is an online platform that helps users to learn, practice coding skills and join the online coding contests.
+</p>
+<a href="https://www.facebook.com/CodeLearnFanpage" title="Facebook" target="_blank" class="social-button">
+<i class="cl-icon-facebook-f"></i>
+</a>
+<a href="https://www.youtube.com/channel/UCpt3dSDGk5fC7uU9OeFG5ig" title="Youtube" target="_blank" class="social-button">
+<i class="cl-icon-youtube"></i>
+</a>
+<a href="https://twitter.com/codelearn_io" title="Twitter" target="_blank" class="social-button">
+<i class="cl-icon-twitter-full"></i>
+</a>
+<a href="https://www.instagram.com/codelearn.io/" title="Instagram" target="_blank" class="social-button">
+<i class="cl-icon-instagram"></i>
+</a>
+</div>
+<div class="col-xs-12 col-sm-4 col-md-2 links footer-column">
+<h4>Links</h4>
+<p><a href="https://codelearn.io/learning" class="link-menu" title="Learning">Learning</a></p>
+<p><a href="https://codelearn.io/training" class="link-menu" title="Training">Training</a></p>
+<p><a href="https://codelearn.io/fights" class="link-menu" title="Fights">Fights</a></p>
+<p><a href="https://codelearn.io/game/index" class="link-menu" title="Game">Game</a></p>
+</div>
+<div class="col-xs-12 col-sm-4 col-md-2 about footer-column">
+<h4>Information</h4>
+<p><a href="https://codelearn.io/aboutus" title="About Us">About Us</a></p>
+<p><a href="https://codelearn.io/terms" title="Terms of Use">Terms of Use</a></p>
+</div>
+<div class="col-xs-12 col-sm-4 col-md-2 help footer-column">
+<h4>Help</h4>
+<p><a href="https://codelearn.io/help" title="Help">Help</a></p>
+<p><a href="https://codelearn.io/discussion" title="Discussion">Discussion</a></p>
+<p><a href="mailto:support@codelearn.io" title="Contact us">Contact us</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xs-12 right-reserved">
+<span class="powerby">
+<img src="./var2_files/logo-fpt-footer.svg" alt="Fpt software" class="fpt-logo">
+Powered by <a href="https://codelearn.io/">CodeLearn</a>
+</span>
+<span class="copyright">© 2021.</span>
+<span>All Rights Reserved. rev 7/14/2021 10:18:38 PM</span>
+</div>
+</div>
+</footer>
+<script src="./var2_files/prism.js.download" type="text/javascript"></script>
+<script src="./var2_files/detail.min.js.download" type="text/javascript"></script>
+<script src="./var2_files/comment.min.js.download" type="text/javascript"></script>
+<script type="text/javascript">
+        var loadCommentsTrigger = {};
+
+        $(function () {
+            if (userId > 0) {
+                $.UseCommentModule({
+                containerSelector: "#container-comment",
+                        headerCountSelector: "#total-comments-count",
+                        contentId: 2555329,
+                        loadCommentsUri: "CodeCamp/Comment/GetComments",
+                        postCommentUri: "CodeCamp/Comment/PostComment",
+                        trigger: loadCommentsTrigger,
+                        postLikeCommentUri: "/Discussion/LikeCommentUri",
+                });
+            }
+        });
+    </script>
+<script type="application/ld+json">
+            {
+            "@context": "https://schema.org/",
+            "@type": "CreativeWorkSeries",
+            "name": "ES Series #1: Các Kiểu Khai Báo Biến Var vs Let vs Const.",
+            "image": "/Upload/Blog/es-series-var-vs-let-vs-const-63731721191.7283.jpg",
+            "url": "https://codelearn.io/sharing/var-vs-let-vs-const-trong-js",
+            "description": "Tại sao lại cần tới let và const dù trước đó đã có var để khai báo biến, thì ở bài viết này là lý do của từng kiểu khai báo biến.",
+            "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue" : "5.0",
+            "ratingCount" : "3",
+            "worstRating":  3,
+            "bestRating": 5
+            }
+            }
+        </script>
+<script async="" defer="" crossorigin="anonymous" src="./var2_files/sdk.js(1).download"></script>
+
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div><div class="fb-customerchat fb_invisible_flow fb_iframe_widget" attribution="setup_tool" page_id="2254662768188202" greeting_dialog_display="hide" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=540883753774783&amp;attribution=setup_tool&amp;container_width=0&amp;current_url=https%3A%2F%2Fcodelearn.io%2Fsharing%2Fvar-vs-let-vs-const-trong-js&amp;greeting_dialog_display=hide&amp;local_state=%7B%22v%22%3A0%2C%22path%22%3A5%2C%22chatState%22%3A1%2C%22visibility%22%3A%22not-hidden%22%2C%22showUpgradePrompt%22%3A%22not_shown%22%7D&amp;locale=en_US&amp;page_id=2254662768188202&amp;request_time=1630472974829&amp;sdk=joey"><span style="vertical-align: bottom; width: 0px; height: 0px;"><iframe name="f2e904340214ef8" width="1000px" height="1000px" data-testid="dialog_iframe" title="" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./var2_files/customerchat.html" style="padding: 0px; position: fixed; z-index: 2147483646; border-radius: 16px; top: auto; width: 247px; max-height: calc(100% - 80px); background: none; bottom: 95px; right: 4px; margin-right: 12px; animation: 6s ease-out 0s 1 normal none running slideInFromBottomDelay; height: 50px;" class=""></iframe></span></div><div class="fb_dialog  fb_dialog_advanced" alignment="right"><div class="fb_dialog_content"><iframe name="blank_f2e904340214ef8" width="60px" tabindex="-1" data-testid="bubble_iframe" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./var2_files/bubble.html" style="animation: 3s ease-out 0s 1 normal none running slideInFromBottomDelay; background: none; border-radius: 29px; bottom: 24px; box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px 0px; display: block; height: 60px; margin: 0px 12px; overflow: visible; padding: 0px; position: fixed; top: auto; width: 60px; z-index: 2147483644; right: 12px;"></iframe><iframe name="unread_f2e904340214ef8" tabindex="-1" data-testid="unread_iframe" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./var2_files/bubble(1).html" style="bottom: 68px; position: fixed; width: 20px; height: 24px; z-index: 2147483645; border-radius: 4pt; background: none; right: 22px;"></iframe></div></div></div>
+
+<div class="modal fade modal-center" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal">
+<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content">
+<div class="modal-body login-modal">
+<div>
+
+<ul class="nav nav-tabs nav-fill" role="tablist">
+<li role="presentation" class="nav-item">
+<a class="nav-link" data-target="#login" aria-controls="login" role="tab" data-toggle="tab" onclick="openModal(&#39;login&#39;)">Login</a>
+</li>
+<li role="presentation" class="nav-item active">
+<a class="nav-link" data-target="#signup" aria-controls="signup" role="tab" data-toggle="tab" onclick="openModal(&#39;signup&#39;)">Register</a>
+</li>
+</ul>
+
+<div class="tab-content">
+<h4 class="header-card">with your social network</h4>
+<div class="signin-options">
+<button class="btn btn-default btn-block btn--microsoft icon-left" onclick="window.location.replace(&#39;https://oauth.codelearn.io/Home/SignIn&#39;)" title="Login to FSoft account via Microsoft">
+<i class="cl-icon-windows" aria-hidden="true"></i>
+<span>Microsoft</span>
+</button>
+<button class="btn btn-default btn-block btn--facebook icon-left" onclick="facebookSignIn()">
+<i class="cl-icon-facebook-f" aria-hidden="true"></i>
+<span>Facebook</span>
+</button>
+<button class="btn btn-default btn-block btn--google icon-left" id="googleSignIn">
+<i class="cl-icon-google-full" aria-hidden="true"></i>
+<span>Google</span>
+</button>
+</div>
+<p class="label-or text-center">OR</p>
+<div role="tabpanel" class="tab-pane " id="login">
+<form id="frmLogin">
+<div class="form-group">
+<input name="username" type="text" class="form-control" placeholder="User name" autocomplete="username">
+<a href="https://codelearn.io/resend-email" title="Resend activation email" class="resend-email hidden">Resend activation email</a>
+</div>
+<div class="form-group" style="margin-bottom: 30px;">
+<input name="password" type="password" class="form-control" placeholder="Please enter password" autocomplete="current-password">
+</div>
+<div class="form-button">
+<button type="submit" class="btn btn-default btn-block btn-blue btn-login">Login</button>
+</div>
+<div class="col-md-12 registered-forgot" role="tablist">
+<div class="col-md-6 text-left">
+<a data-target="#signup" aria-controls="signup" role="tab" data-toggle="tab" onclick="openModal(&#39;login&#39;)">
+Not a member? Register
+</a>
+ </div>
+<div class="col-md-6 text-right">
+<a href="https://codelearn.io/forgot-password">I can't rememeber my password</a>
+</div>
+</div>
+<div class="col-md-12 terms-of-use">
+This site is protected by reCAPTCHA and <a href="https://codelearn.io/terms" target="_blank">Terms of Use</a> apply.
+</div>
+</form>
+</div>
+<div role="tabpanel" class="tab-pane active" id="signup">
+<form id="frmSignup" method="POST" action="https://codelearn.io/">
+<div class="form-group">
+<input name="username" type="text" class="form-control" placeholder="User name" autocomplete="username">
+</div>
+<div class="form-group">
+<input name="email" type="email" class="form-control" placeholder="Email" autocomplete="email">
+</div>
+<div class="form-group">
+<input name="password" type="password" class="form-control" placeholder="Password" autocomplete="current-password">
+</div>
+<div class="form-check">
+<div class="checkbox-area">
+<input name="cbAgree" type="checkbox" value="1" class="form-check-input" id="cbAgree" data-error="#cbAgree-error">
+<label class="form-check-label" for="cbAgree">
+I agree to the <a href="https://codelearn.io/terms" target="_blank">Terms and Conditions</a> of CodeLearn
+</label>
+</div>
+<div id="cbAgree-error"></div>
+</div>
+<button type="submit" class="btn btn-default btn-block btn-blue btn-signup">Register</button>
+<div class="col-md-12 registered-forgot" style="margin-bottom: 0;">
+<div class="col-md-6 text-left">
+<a data-target="#login" aria-controls="login" role="tab" data-toggle="tab" onclick="openModal(&#39;login&#39;)">
+Already registered? Login
+</a>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+
+        var siteKey = '6LcMTLMUAAAAAFLLyTIvjCj7k0bAG8ZqjnaTTrQE';
+        </script>
+
+<noscript>
+        <img height="1" width="1" style="display:none" alt=""
+             src="https://www.facebook.com/tr?id=700313553710795&ev=PageView&noscript=1" />
+    </noscript>
+
+
+<div><div class="grecaptcha-badge" data-style="bottomright" style="width: 256px; height: 60px; display: block; transition: right 0.3s ease 0s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden;"><div class="grecaptcha-logo"><iframe title="reCAPTCHA" src="./var2_files/anchor.html" width="256" height="60" role="presentation" name="a-1vifop93o82" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response-100000" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;" src="./var2_files/saved_resource.html"></iframe></div><iframe id="ssIFrame_google" sandbox="allow-scripts allow-same-origin" aria-hidden="true" frame-border="0" src="./var2_files/iframe.html" width="818" height="NaN" style="position: absolute; width: 1px; height: 1px; inset: -9999px; display: none;"></iframe><div id="gtx-trans" style="position: absolute; left: 82px; top: 952.594px;"><div class="gtx-trans-icon"></div></div><div class="ddict_btn" style="top: 995px; left: 904.5px;"><img src="chrome-extension://bpggmmljdiliancllaapiggllnkbjocb/logo/16.png"></div></body><div style="position: absolute; top: 0px;"></div></html>
